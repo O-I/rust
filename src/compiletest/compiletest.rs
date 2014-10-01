@@ -11,14 +11,10 @@
 #![crate_type = "bin"]
 #![feature(phase)]
 
-// we use our own (green) start below; do not link in libnative; issue #13247.
-#![no_start]
-
 #![deny(warnings)]
 
 extern crate test;
 extern crate getopts;
-extern crate green;
 extern crate rustuv;
 #[phase(plugin, link)] extern crate log;
 
@@ -40,11 +36,6 @@ pub mod header;
 pub mod runtest;
 pub mod common;
 pub mod errors;
-
-#[start]
-fn start(argc: int, argv: *const *const u8) -> int {
-    green::start(argc, argv, rustuv::event_loop, main)
-}
 
 pub fn main() {
     let args = os::args();
